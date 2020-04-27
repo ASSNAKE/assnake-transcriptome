@@ -3,7 +3,8 @@ import assnake
 from tabulate import tabulate
 import click
 import pandas as pd 
-from assnake.cli.cli_utils import sample_set_construction_options, add_options, generic_command_individual_samples, generate_result_list
+from assnake.core.sample_set import generic_command_individual_samples, generate_result_list
+from assnake.cli.cli_utils import sample_set_construction_options, add_options
 import os, datetime 
 
 @click.command('salmon', short_help='Salmon quasi trabscript aligner')
@@ -20,7 +21,7 @@ def salmon_invoke(config, reference, **kwargs):
 
     res_list = []
 
-    for s in sample_set.to_dict(orient='records'):
+    for s in sample_set.samples_pd.to_dict(orient='records'):
         preprocessing = s['preproc']
         res_list.append( '{fs_prefix}/{df}/salmon__v1.1.0/{reference}/{sample}/{preproc}/quant.sf'.format(
             fs_prefix = s['fs_prefix'].rstrip('\/'),
@@ -31,6 +32,5 @@ def salmon_invoke(config, reference, **kwargs):
         ))
 
     config['requests'] += res_list
-    
 
     

@@ -52,11 +52,13 @@ rule map_on_reference_hisat2:
 
 rule feature_count:
     input:
-        sort = '{fs_prefix}/{df}/mapped/{mapper}__def/{path}/{seq_set_id}/{sample}/{preproc}/{sample}.bam',
+        sort  = '{fs_prefix}/{df}/mapped/{mapper}__{version}__{params}/{path}/{seq_set_id}/{df_sample}/{preproc}/{df_sample}.bam',
         gtf_annotation = os.path.join(fna_db_dir, '{path}/{seq_set_id}.gtf')
     output:
-        count         = '{fs_prefix}/{df}/mapped/{mapper}__def/{path}/{seq_set_id}/{sample}/{preproc}/{sample}_feature_counts.tsv',
+        count = '{fs_prefix}/{df}/mapped/{mapper}__{version}__{params}/{path}/{seq_set_id}/{df_sample}/{preproc}/{df_sample}_feature_counts.tsv',
         # count_summary = '{fs_prefix}/{df}/mapped/hisat2__def/{path}/{seq_set_id}/{sample}/{preproc}/{sample}_feature_counts.tsv.summary'
+    wildcard_constraints:    
+        params="[\w\d_-]+",
     conda: 'hisat2_env.yaml'
     threads: 8
     shell: ("featureCounts -p -T {threads} -t gene -g gene_id  -a {input.gtf_annotation} -o {output.count} {input.sort}")
