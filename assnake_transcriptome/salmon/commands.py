@@ -23,11 +23,11 @@ def salmon_invoke(config, reference, **kwargs):
 
     for s in sample_set.to_dict(orient='records'):
         preprocessing = s['preproc']
-        res_list.append( '{fs_prefix}/{df}/salmon__v1.1.0/{reference}/{sample}/{preproc}/quant.sf'.format(
+        res_list.append( '{fs_prefix}/{df}/salmon__v1.1.0/{reference}/{df_sample}/{preproc}/quant.sf'.format(
             fs_prefix = s['fs_prefix'].rstrip('\/'),
             df = s['df'],
             preproc = preprocessing,
-            sample = s['fs_name'],
+            sample = s['df_sample'],
             reference = reference
         ))
 
