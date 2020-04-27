@@ -27,7 +27,7 @@ def salmon_invoke(config, reference, **kwargs):
             fs_prefix = s['fs_prefix'].rstrip('\/'),
             df = s['df'],
             preproc = preprocessing,
-            sample = s['df_sample'],
+            df_sample = s['df_sample'],
             reference = reference
         ))
 
