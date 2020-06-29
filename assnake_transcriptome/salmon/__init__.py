@@ -1,0 +1,1 @@
+from assnake_transcriptome.salmon.result import result
